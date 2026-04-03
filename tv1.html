@@ -19,7 +19,7 @@
 <div id="slider"></div>
 
 <script>
-fetch('tv1.json')
+fetch('tv1.json?t=' + new Date().getTime())
 .then(res => res.json())
 .then(data => {
   const container = document.getElementById("slider");
