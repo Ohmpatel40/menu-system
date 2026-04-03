@@ -89,7 +89,7 @@ async function upload(screen, inputId) {
     const content = reader.result.split(",")[1];
 
     // 1. Upload image to GitHub
-    await fetch(`https://api.github.com/repos/${REPO}/contents/images/${file.name}`, {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/images/${file.name}`, {
       method: "PUT",
       headers: {
         "Authorization": "token " + TOKEN,
@@ -100,6 +100,14 @@ async function upload(screen, inputId) {
         content: content
       })
     });
+
+const result = await res.json();
+console.log(result);
+
+if (!res.ok) {
+  alert("Upload failed: " + result.message);
+  return;
+}
 
     // 2. Get JSON
     const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${screen}.json`, {
